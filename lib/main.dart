@@ -1,5 +1,7 @@
-import 'package:Carpool/signup.dart';
+import 'package:carpool/signup.dart';
 import 'package:flutter/material.dart';
+
+import 'signup.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,6 +18,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primaryColor: Color(0xff4099DA),
         accentColor: Color(0xff644C76),
+        backgroundColor: Color(0xff4099DA),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -35,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => LandingPage(title: "Sign Up"),
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/drivingto': (context) => DrivingToPage(),
+        '/enterdetails': (context) => EnterDetailsPage()
       },
     );
   }
