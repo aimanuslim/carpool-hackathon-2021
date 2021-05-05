@@ -1,3 +1,4 @@
+import 'package:Carpool/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,7 +27,15 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LandingPage(title: 'Sign Up'),
+      // home: LandingPage(title: 'Sign Up'),
+      initialRoute: '/',
+      // AIMMU: add routes here for the different screens. reference: https://flutter.dev/docs/cookbook/navigation/named-routes
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/': (context) => LandingPage(title: "Sign Up"),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+        '/drivingto': (context) => DrivingToPage(),
+      },
     );
   }
 }
@@ -131,6 +140,23 @@ class _LandingPageState extends State<LandingPage> {
                 decoration: InputDecoration(labelText: "Code"),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: OutlinedButton(
+                    child: Text(
+                      "Next",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/drivingto");
+                    },
+                  ),
+                )
+              ],
+            )
           ],
         ),
       ),
