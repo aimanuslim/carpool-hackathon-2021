@@ -12,14 +12,78 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Colors.white;
+    }
+
     return MaterialApp(
       title: 'Carpool',
       theme: ThemeData(
         fontFamily: 'OrstedSansOffice',
+        checkboxTheme: CheckboxThemeData(
+          fillColor: MaterialStateProperty.resolveWith((states) => Colors.white),
+          checkColor: MaterialStateProperty.resolveWith((states) => Color(0xff644C76))
+        ),
+        hintColor: Colors.white,
+
+        
+        inputDecorationTheme: InputDecorationTheme(
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)
+          ),
+          focusedErrorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)
+          ),
+          disabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Color(0xff644C76))
+          ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)
+          ),
+          errorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.red)
+          ),
+          focusColor: Colors.white,
+          labelStyle: TextStyle(color: Colors.white),
+          hoverColor: Colors.white
+        ),
+        textTheme: TextTheme(
+          
+          subtitle1: TextStyle(color: Colors.white),
+          subtitle2: TextStyle(color: Colors.white),
+          button: TextStyle(color: Colors.white),
+          bodyText1: TextStyle(color: Colors.white),
+          bodyText2: TextStyle(color: Colors.white),
+          headline6: TextStyle(color: Colors.white),
+          headline1: TextStyle(color: Colors.white),
+          headline2: TextStyle(color: Colors.white),
+          headline3: TextStyle(color: Colors.white),
+          headline4: TextStyle(color: Colors.white),
+          headline5: TextStyle(color: Colors.white),
+          
+          ),
+        outlinedButtonTheme: OutlinedButtonThemeData(style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.resolveWith(getColor))),
         brightness: Brightness.light,
-        primaryColor: Color(0xff4099DA),
+        // primaryColor: Color(0xff4099DA),
         accentColor: Color(0xff644C76),
-        backgroundColor: Color(0xff4099DA),
+        scaffoldBackgroundColor: Color(0xff4099DA),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xff4099DA),
+          foregroundColor: Colors.white
+          ),
+        
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the

@@ -110,7 +110,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: OutlinedButton(
                     child: Text(
                       "Next",
-                      style: TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
                       Navigator.pushNamed(context, "/drivingto");
@@ -188,7 +187,11 @@ class _DrivingToPageState extends State<DrivingToPage> {
           padding: const EdgeInsets.all(20.0),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("Next"),
+            child: OutlinedButton(
+              onPressed: (){
+                Navigator.pushNamed(context, "/enterdetails");
+              },
+              child: Text("Next")),
           ),
         )
       ],
