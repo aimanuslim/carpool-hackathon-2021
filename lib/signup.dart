@@ -1,6 +1,7 @@
+import 'package:carpool/models.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
-
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key? key, required this.title}) : super(key: key);
@@ -44,6 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    UserInfo userInfoModel = Provider.of<UserInfo>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -72,21 +74,33 @@ class _SignUpPageState extends State<SignUpPage> {
           children: <Widget>[
             Row(
               children: [
-                Checkbox(
-                    value: isDriver,
-                    onChanged: (newValue) {
-                      _driverSelected(newValue!);
-                    }),
+                Consumer<UserInfo>(
+                  builder: (context, userinfo, child) => Checkbox(
+                      value: userinfo.isDriver,
+                      onChanged: (newValue) {
+                        if(newValue!){
+                          userInfoModel.setAsDriver();
+                        } else {
+                          userInfoModel.unsetAsDriver();
+                        }
+                      }),
+                ),
                 Text("Driver"),
               ],
             ),
             Row(
               children: [
-                Checkbox(
-                    value: isPassenger,
-                    onChanged: (newValue) {
-                      _passengerSelected(newValue!);
-                    }),
+                Consumer<UserInfo>(
+                  builder: (context, userinfo, child) => Checkbox(
+                      value: userinfo.isPassenger,
+                      onChanged: (newValue) {
+                        if(newValue!){
+                          userInfoModel.setAsPassenger();
+                        } else {
+                          userInfoModel.unsetAsPassenger();
+                        }
+                      }),
+                ),
                 Text("Passenger"),
               ],
             ),
@@ -112,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       "Next",
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, "/drivingto");
+                      Navigator.pushNamed(context, "/headingto");
                     },
                   ),
                 )
@@ -125,21 +139,47 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
-class DrivingToPage extends StatefulWidget {
+class HeadingToPage extends StatefulWidget {
   @override
-  _DrivingToPageState createState() => _DrivingToPageState();
+  _HeadingToPageState createState() => _HeadingToPageState();
 }
 
-class _DrivingToPageState extends State<DrivingToPage> {
+class _HeadingToPageState extends State<HeadingToPage> {
   Map<String, List<String>> locationList = {
-    "Malaysia": ["KL"],
-    "UK": ["London", "EC", "H2C"]
+    "Malaysia": ["Kuala Lumpur"],
+    "Great Britain": [
+      "London",
+      "Edinburgh",
+      "Barrow",
+      "Grimsby - Lincolnshire"
+    ],
+    "Denmark": ["Gentofte", "Skærbæk", "Bellahøj"],
+    "Germany": ["Hamburg", "Berlin", "Norden - Norddeich"],
+    "Belgium": ["Brussels"],
+    "Ireland": ["Cork"],
+    "Japan": ["Tokyo"],
+    "Poland": ["Warsaw"],
+    "Sweden": ["Stockholm"],
+    "Singapore": ["Singapore"],
+    "Taiwan": ["Changhua", "Taipei", "Taichung"],
+    "USA": [
+      "Chicago",
+      "Charlottesville",
+      "New London",
+      "Newark - New Jersey",
+      "New York",
+      "Providence",
+      "Rhode Island",
+      "Washington D.C." "Boston"
+    ],
+    "Vietnam": ["Hanoi"]
   };
 
   List<String> selectedLocations = [];
 
   @override
   Widget build(BuildContext context) {
+    UserInfo userInfoModel = Provider.of<UserInfo>(context, listen: false);
     List<Widget> listOfWidgets = [];
     locationList.forEach((country, officeList) {
       listOfWidgets.add(ExpandableNotifier(
@@ -188,10 +228,10 @@ class _DrivingToPageState extends State<DrivingToPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: OutlinedButton(
-              onPressed: (){
-                Navigator.pushNamed(context, "/enterdetails");
-              },
-              child: Text("Next")),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/enterdetails");
+                },
+                child: Text("Next")),
           ),
         )
       ],
@@ -199,11 +239,12 @@ class _DrivingToPageState extends State<DrivingToPage> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Driving To"),
+          title: userInfoModel.isDriver
+              ? Text("I will be driving to..")
+              : Text("I am heading to.."),
         ),
         body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
                 children: listOfWidgets)));
   }
 }
@@ -282,16 +323,12 @@ class DetailsFormState extends State<DetailsForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: OutlinedButton(
-                  onPressed: (){
-
-                  }, 
-                  child: Text("Next")),
+                child: OutlinedButton(onPressed: () {}, child: Text("Next")),
               )
-            ],)
+            ],
+          )
         ],
       ),
     );

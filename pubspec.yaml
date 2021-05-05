@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   expandable: ^5.0.1
+  provider: ^5.0.0
   
 
 

@@ -1,11 +1,15 @@
+import 'package:carpool/models.dart';
 import 'package:carpool/signin.dart';
 import 'package:carpool/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'signup.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => UserInfo(),
+    child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -104,10 +108,11 @@ class MyApp extends StatelessWidget {
         '/signin': (context) => SignInPage(),
         '/': (context) => LandingPage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/drivingto': (context) => DrivingToPage(),
+        '/headingto': (context) => HeadingToPage(),
         '/enterdetails': (context) => EnterDetailsPage(),
         '/commutedetails': (context) => UserCommuteDetailsPage(),
-        '/selecteddrivers': (context) => SelectedDriverPage()
+        '/selecteddrivers': (context) => SelectedDriverPage(),
+        '/mainpage': (context) => MainPage()
       },
     );
   }
