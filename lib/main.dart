@@ -42,7 +42,8 @@ class MyApp extends StatelessWidget {
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/drivingto': (context) => DrivingToPage(),
         '/enterdetails': (context) => EnterDetailsPage(),
-        '/commutedetails': (context) => UserCommuteDetailsPage()
+        '/commutedetails': (context) => UserCommuteDetailsPage(),
+        '/selecteddrivers': (context) => SelectedDriverPage()
       },
     );
   }

@@ -59,7 +59,7 @@ class _UserCommuteDetailsPageState extends State<UserCommuteDetailsPage> {
       floatingActionButton: OutlinedButton(
         child: Text("Next"),
         onPressed: (){
-
+          Navigator.pushNamed(context, '/selecteddrivers');
         },
       ),
       appBar: AppBar(title: Text("Car pooling details."),),
@@ -115,6 +115,53 @@ class _UserCommuteDetailsPageState extends State<UserCommuteDetailsPage> {
           
 
       ],),
+    );
+  }
+}
+
+class SelectedDriverPage extends StatefulWidget {
+  @override
+  _SelectedDriverPageState createState() => _SelectedDriverPageState();
+}
+
+class _SelectedDriverPageState extends State<SelectedDriverPage> {
+  List<String> driverList = [
+    "Peter Kia",
+    "Andres Ford",
+    "Peter Bentley",
+    "Niels Obel"
+  ];
+
+  List<String> selectedDriver = [];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: ListView(
+        children: [
+        Center(child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text("Following drivers could help pick you up"),
+        )),
+        Column(children: driverList.map((driver) => ListTile(
+          title: Text(driver),
+          leading: Checkbox(
+            value: selectedDriver.contains(driver),
+            onChanged: (value) {
+              setState(() {
+                if(value!){
+                  selectedDriver.add(driver);
+                } else {
+                  selectedDriver.remove(driver);
+                }
+              });
+            },
+             )
+        )).toList()
+        ,)
+
+        ]
+      ),      
     );
   }
 }
