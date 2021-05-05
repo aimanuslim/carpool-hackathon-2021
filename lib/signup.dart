@@ -126,8 +126,6 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
-
-
 class DrivingToPage extends StatefulWidget {
   @override
   _DrivingToPageState createState() => _DrivingToPageState();
@@ -188,11 +186,10 @@ class _DrivingToPageState extends State<DrivingToPage> {
       children: [
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: OutlinedButton(
-              child: Text("Next"),
-              onPressed: () {
-                Navigator.pushNamed(context, '/enterdetails');
-              }),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Next"),
+          ),
         )
       ],
     ));
