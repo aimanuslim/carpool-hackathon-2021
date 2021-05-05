@@ -3,6 +3,8 @@
    <application
         android:label="carpool"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyBaTNZP7jh7tzO9QoL_0QoEJlTH10cQCqI"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
