@@ -213,11 +213,20 @@ class _UserCommuteDetailsPageState extends State<UserCommuteDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: OutlinedButton(
-        child: Text("Next"),
-        onPressed: () {
-          Navigator.pushNamed(context, '/notification');
-        },
+      floatingActionButton: Consumer<UserInfo>(
+              builder: (context, userinfo, child ) => OutlinedButton(
+          child: Text("Next"),
+          onPressed: () {
+            if(userinfo.isPassenger){
+              Navigator.pushNamed(context, '/selecteddrivers');
+
+            } 
+            if(userinfo.isDriver){
+            Navigator.pushNamed(context, '/notification');
+
+            }
+          },
+        ),
       ),
       appBar: AppBar(
         title: Text("Car pooling details."),
@@ -316,6 +325,15 @@ class _SelectedDriverPageState extends State<SelectedDriverPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      floatingActionButton: Consumer<UserInfo>(
+              builder: (context, userinfo, child ) => OutlinedButton(
+          child: Text("Next"),
+          onPressed: () {
+            Navigator.pushNamed(context, '/notification');
+
+          },
+        ),
+      ),
       body: ListView(children: [
         Center(
             child: Padding(

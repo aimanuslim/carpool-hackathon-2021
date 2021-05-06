@@ -54,7 +54,7 @@ class _NotificationPageState extends State<NotificationPage> {
                 padding: const EdgeInsets.all(20.0),
                 child: Consumer<UserInfo>(
                     builder: (context, userinfo, child) => Text(
-                        "Your relevant ${userinfo.isDriver ? "passenger(s)" : "driver(s)"} will be notified.")),
+                        userinfo.isPassenger ? "Your relevant driver(s) will be notified." : "You will be notified of any interested passengers." )),
               )),
               Icon(
                 Icons.check_circle,
