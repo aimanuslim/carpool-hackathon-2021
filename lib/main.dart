@@ -151,29 +151,7 @@ class _LandingPageState extends State<LandingPage> {
           OutlinedButton(child: Text("Sign Up"),onPressed: () {
             Navigator.pushNamed(context, "/signup");
           },),
-          Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: OutlinedButton(
-                    child: Text(
-                      "To maps",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => GoogleMaps(
-                                  source_location: LatLng(
-                                      3.1112913233110935, 101.66584823996021),
-                                  dest_location: LatLng(
-                                      3.1956071385311455, 101.60778900777943),
-                                  passenger_location: LatLng(
-                                      3.160461096819543, 101.59772941034296),
-                                )),
-                      );
-                    },
-                  ),
-                )
+          
         ],),)
       
     );

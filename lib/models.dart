@@ -3,6 +3,13 @@ import 'package:flutter/cupertino.dart';
 class UserInfo extends ChangeNotifier {
   bool _isDriver = false;
   bool _isPassenger = false;
+  String driverAddress = "1301 Prosperity Road";
+  String driverCity = "Bolehland";
+  String driverPoscode = "78990";
+
+  String passengerAddress = "56 Climaru Avenue";
+  String passengerCity = "BoiCity";
+  String passengerPoscode = "50600";
   
 
   void clearAll() {

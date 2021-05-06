@@ -187,6 +187,11 @@ class MainPageState extends State<MainPage> {
                             }),
                       )
                     : Container(),
+                Center(
+                  child: OutlinedButton(onPressed: (){
+                    // TODO: placeholder, call SAVEKM here
+                  }, child: Text("Metrics")),
+                )
               ],
             ),
           ),

@@ -3,9 +3,11 @@
 join the route. The output is the distance saved in KM instead of driving alone.
  */
 
+import 'package:carpool/models.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 import 'savedKM.dart';
 
@@ -199,35 +201,36 @@ class _GoogleMapsState extends State<GoogleMaps> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: Text('Here is how to get to your [placeholder]'),
-      ),
-      body: GoogleMap(
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: LatLng(3.1112913233110935, 101.66584823996021),
-          zoom: 11.0,
+    return  Consumer<UserInfo>(
+          builder: (context, userinfo, child) => Scaffold(
+        appBar: AppBar(
+          title: Text('Here is how to get to your ${userinfo.isDriver ? "passenger" : "driver"}.', style: TextStyle(fontSize: 14),),
         ),
-        markers: _markers.toSet(),
-        polylines: _polylines,
+        body: GoogleMap(
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(3.1112913233110935, 101.66584823996021),
+            zoom: 11.0,
+          ),
+          markers: _markers.toSet(),
+          polylines: _polylines,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.arrow_back_outlined), label: 'Back'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.assignment_turned_in_outlined),
+                  label: 'Accept route'),
+            ],
+            type: BottomNavigationBarType.shifting,
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.grey,
+            unselectedItemColor: Colors.grey,
+            iconSize: 40,
+            onTap: _onItemTap,
+            elevation: 5),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.arrow_back_outlined), label: 'Back'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.assignment_turned_in_outlined),
-                label: 'Accept route'),
-          ],
-          type: BottomNavigationBarType.shifting,
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.grey,
-          unselectedItemColor: Colors.grey,
-          iconSize: 40,
-          onTap: _onItemTap,
-          elevation: 5),
-    ));
+    );
   }
 }
