@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   expandable: ^5.0.1
   provider: ^5.0.0
+  chart_components: ^1.0.1
+  group_button: ^2.1.1
   
 
 

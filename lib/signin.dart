@@ -161,7 +161,6 @@ class MainPageState extends State<MainPage> {
                       child: Text("Edit your information"),
                       onPressed: () {
                         Navigator.pushNamed(context, "/headingto");
-                        // TODO: to continue
                       }),
                 ),
                 userinfo.isPassenger
@@ -190,6 +189,7 @@ class MainPageState extends State<MainPage> {
                 Center(
                   child: OutlinedButton(onPressed: (){
                     // TODO: placeholder, call SAVEKM here
+                    Navigator.pushNamed(context, "/metrics");
                   }, child: Text("Metrics")),
                 )
               ],
@@ -212,8 +212,6 @@ class _UserCommuteDetailsPageState extends State<UserCommuteDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    UserInfo userInfoModel = Provider.of<UserInfo>(context, listen: false);
-
     return Scaffold(
       floatingActionButton: OutlinedButton(
         child: Text("Next"),

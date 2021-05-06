@@ -2,9 +2,7 @@ import 'package:carpool/models.dart';
 import 'package:carpool/signin.dart';
 import 'package:carpool/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'common.dart';
-import 'google_maps.dart';
 import 'package:provider/provider.dart';
 
 import 'signup.dart';
@@ -119,6 +117,7 @@ class MyApp extends StatelessWidget {
         '/confirmation': (context) => ConfirmationPage(),
         '/notification': (context) => NotificationPage(),
         '/messagelist': (context) => MessageListPage(),
+        '/metrics': (context) => MetricsPage(),
         '/mainpage': (context) => MainPage(),
       },
     );

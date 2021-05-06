@@ -1,6 +1,11 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:carpool/models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:chart_components/bar_chart_component.dart';
+import 'package:group_button/group_button.dart';
 
 class MessageListPage extends StatefulWidget {
   @override
@@ -48,8 +53,8 @@ class _NotificationPageState extends State<NotificationPage> {
                   child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Consumer<UserInfo>(
-                    builder: (context, userinfo, child) =>
-                        Text("Your relevant ${userinfo.isDriver ? "passenger(s)" : "driver(s)"} will be notified.")),
+                    builder: (context, userinfo, child) => Text(
+                        "Your relevant ${userinfo.isDriver ? "passenger(s)" : "driver(s)"} will be notified.")),
               )),
               Icon(
                 Icons.check_circle,
@@ -167,7 +172,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 title: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+                      userinfo.isDriver ? 
+                      userinfo.driverAddress + ", " +  userinfo.driverCity + ", " + userinfo.driverPoscode :
+                      userinfo.passengerAddress + ", " +  userinfo.passengerCity + ", " + userinfo.passengerPoscode
+                      ),
                 ),
               )
             ],
@@ -266,6 +274,166 @@ class DetailsFormState extends State<DetailsForm> {
             ],
           )
         ],
+      ),
+    );
+  }
+}
+
+class MetricsPage extends StatefulWidget {
+  @override
+  _MetricsPageState createState() => _MetricsPageState();
+}
+
+class _MetricsPageState extends State<MetricsPage> {
+  List<double> data = List.generate(15, (index) => Random().nextDouble());
+  List<String> labels = List.generate(15, (index) => (index + 2021).toString());
+  int currentIndex = 1;
+  List<String> allSubject = ["You", "Orsted"];
+  List<String> selectedSubject = ["You"];
+
+  void _generateLabels(int index) {
+    Random rng = Random();
+
+    if (index == 0) {
+      int randomStartWeek = rng.nextInt(50);
+      setState(() {
+        labels = List<String>.generate(
+            10, (index) => (index + randomStartWeek).toString());
+      });
+    }
+
+    if (index == 1) {
+      setState(() {
+        labels = List<String>.generate(10, (index) => (index + 2).toString());
+      });
+    }
+
+    if (index == 2) {
+      int randomStartYear = 2000 + rng.nextInt(20);
+      setState(() {
+        labels = List<String>.generate(
+            10, (index) => (index + randomStartYear).toString());
+      });
+    }
+  }
+
+  void _generateData(int index) {
+    Random rng = Random();
+    data =
+        List<double>.generate(10, (index) => rng.nextDouble() + rng.nextInt(5));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Your performance'),
+      ),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(top: 16),
+              child: Text(
+                'Co2 Savings',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+
+            Expanded(
+              flex: 30,
+              child: Container(
+                margin: EdgeInsets.all(16),
+                padding: EdgeInsets.only(bottom: 0, left: 8, right: 8, top: 8),
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  border: Border.all(color: Theme.of(context).primaryColor),
+                ),
+                child: BarChart(
+                  data: data,
+                  labels: labels,
+                  labelStyle: TextStyle(fontSize: 12),
+                  valueStyle: TextStyle(fontSize: 8),
+                  displayValue: true,
+                  reverse: true,
+                  getColor: (val) => Colors.white,
+                  // getIcon: (val) => Icon(Icons.ac_unit),
+                  barWidth: 30,
+                  barSeparation: 40,
+                  animationDuration: Duration(milliseconds: 1000),
+                  animationCurve: Curves.easeInOutSine,
+                  itemRadius: 10,
+                  iconHeight: 24,
+                  footerHeight: 24,
+                  headerValueHeight: 16,
+                  roundValuesOnText: false,
+                  lineGridColor: Colors.lightBlue,
+                ),
+              ),
+            ),
+            // FractionallySizedBox(
+            //   widthFactor: 0.9,
+            //   child: ElevatedButton(
+            //     child: Text(
+            //       'Refresh data',
+            //       style: TextStyle(color: Colors.white, fontSize: 18),
+            //     ),
+            //     onPressed: _loadData,
+            //   ),
+            // ),
+            SizedBox(
+              height: 8,
+            ),
+            GroupButton(
+              isRadio: true,
+              spacing: 10,
+              selectedButtons: ["Week"],
+              selectedColor: Color(0xff644C76),
+              onSelected: (index, isSelected) {
+                setState(() {
+                  currentIndex = index;
+                });
+                _generateLabels(index);
+                _generateData(index);
+              },
+              buttons: ["Week", "Month", "Year"],
+            ),
+            Expanded(
+              flex: 10,
+              child: Row(
+                  children: allSubject
+                      .map((subject) => Expanded(
+                            child: ListTile(
+                              leading: Checkbox(
+                                value: selectedSubject.contains(subject),
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      selectedSubject.add(subject);
+                                    } else {
+                                      selectedSubject.remove(subject);
+                                    }
+                                    if(selectedSubject.isEmpty) {
+                                      selectedSubject.add("You");
+                                    }
+                                  });
+
+                                  _generateLabels(currentIndex);
+                                  _generateData(currentIndex);
+                                },
+                              ),
+                              title: Text(subject),
+                            ),
+                          ))
+                      .toList()),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -25,17 +25,6 @@ class _SignUpPageState extends State<SignUpPage> {
   bool isDriver = true;
   bool isPassenger = false;
 
-  void _driverSelected(bool newValue) {
-    setState(() {
-      isDriver = newValue;
-    });
-  }
-
-  void _passengerSelected(bool newValue) {
-    setState(() {
-      isPassenger = newValue;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +169,6 @@ class _LocationsListPageState extends State<LocationsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    UserInfo userInfoModel = Provider.of<UserInfo>(context, listen: false);
     List<Widget> listOfWidgets = [];
     locationList.forEach((country, officeList) {
       listOfWidgets.add(ExpandableNotifier(
