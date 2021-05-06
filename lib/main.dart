@@ -1,23 +1,95 @@
-import 'package:Carpool/signup.dart';
+import 'package:carpool/models.dart';
+import 'package:carpool/signin.dart';
+import 'package:carpool/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'google_maps.dart';
+import 'package:provider/provider.dart';
+
+import 'signup.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => UserInfo(),
+    child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Colors.white;
+    }
+
     return MaterialApp(
       title: 'Carpool',
       theme: ThemeData(
         fontFamily: 'OrstedSansOffice',
+        checkboxTheme: CheckboxThemeData(
+          fillColor: MaterialStateProperty.resolveWith((states) => Colors.white),
+          checkColor: MaterialStateProperty.resolveWith((states) => Color(0xff644C76))
+        ),
+        hintColor: Colors.white,
+
+        
+        inputDecorationTheme: InputDecorationTheme(
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)
+          ),
+          focusedErrorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)
+          ),
+          disabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Color(0xff644C76))
+          ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)
+          ),
+          errorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.red)
+          ),
+          focusColor: Colors.white,
+          labelStyle: TextStyle(color: Colors.white),
+          hoverColor: Colors.white
+        ),
+        textTheme: TextTheme(
+          
+          subtitle1: TextStyle(color: Colors.white),
+          subtitle2: TextStyle(color: Colors.white),
+          button: TextStyle(color: Colors.white),
+          bodyText1: TextStyle(color: Colors.white),
+          bodyText2: TextStyle(color: Colors.white),
+          headline6: TextStyle(color: Colors.white),
+          headline1: TextStyle(color: Colors.white),
+          headline2: TextStyle(color: Colors.white),
+          headline3: TextStyle(color: Colors.white),
+          headline4: TextStyle(color: Colors.white),
+          headline5: TextStyle(color: Colors.white),
+          
+          ),
+        outlinedButtonTheme: OutlinedButtonThemeData(style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.resolveWith(getColor))),
         brightness: Brightness.light,
-        primaryColor: Color(0xff4099DA),
+        // primaryColor: Color(0xff4099DA),
         accentColor: Color(0xff644C76),
+        scaffoldBackgroundColor: Color(0xff4099DA),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xff4099DA),
+          foregroundColor: Colors.white
+          ),
+        
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -34,130 +106,46 @@ class MyApp extends StatelessWidget {
       // AIMMU: add routes here for the different screens. reference: https://flutter.dev/docs/cookbook/navigation/named-routes
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => LandingPage(title: "Sign Up"),
+        '/signup': (context) => SignUpPage(title: "Sign Up"),
+        '/signin': (context) => SignInPage(),
+        '/': (context) => LandingPage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/drivingto': (context) => DrivingToPage(),
+        '/headingto': (context) => HeadingToPage(),
+        '/enterdetails': (context) => EnterDetailsPage(),
+        '/commutedetails': (context) => UserCommuteDetailsPage(),
+        '/selecteddrivers': (context) => SelectedDriverPage(),
+        '/mainpage': (context) => MainPage()
       },
     );
   }
 }
 
 class LandingPage extends StatefulWidget {
-  LandingPage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
   @override
   _LandingPageState createState() => _LandingPageState();
 }
 
 class _LandingPageState extends State<LandingPage> {
-  bool isDriver = true;
-  bool isPassenger = false;
-
-  void _driverSelected(bool newValue) {
-    setState(() {
-      isDriver = newValue;
-    });
-  }
-
-  void _passengerSelected(bool newValue) {
-    setState(() {
-      isPassenger = newValue;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
+
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text("Welcome"),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              children: [
-                Checkbox(
-                    value: isDriver,
-                    onChanged: (newValue) {
-                      _driverSelected(newValue!);
-                    }),
-                Text("Driver"),
-              ],
-            ),
-            Row(
-              children: [
-                Checkbox(
-                    value: isPassenger,
-                    onChanged: (newValue) {
-                      _passengerSelected(newValue!);
-                    }),
-                Text("Passenger"),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextFormField(
-                decoration: InputDecoration(labelText: "User Initials"),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextFormField(
-                decoration: InputDecoration(labelText: "Code"),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: OutlinedButton(
-                    child: Text(
-                      "Next",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/drivingto");
-                    },
-                  ),
-                ),
-                Padding(
+   
+      body: Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          OutlinedButton(child: Text("Sign In"),onPressed: () {
+            Navigator.pushNamed(context, "/signin");
+          },),
+          OutlinedButton(child: Text("Sign Up"),onPressed: () {
+            Navigator.pushNamed(context, "/signup");
+          },),
+          Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: OutlinedButton(
                     child: Text(
@@ -180,11 +168,8 @@ class _LandingPageState extends State<LandingPage> {
                     },
                   ),
                 )
-              ],
-            )
-          ],
-        ),
-      ),
+        ],),)
+      
     );
   }
 }
