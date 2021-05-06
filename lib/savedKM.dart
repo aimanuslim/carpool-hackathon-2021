@@ -15,9 +15,10 @@ class SavedKM extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, "/mainpage");
           },
-          child: Text(number.toString()),
+          child:
+              Text(number.toString() + ' km of driving saved by doing this.'),
         ),
       ),
     );

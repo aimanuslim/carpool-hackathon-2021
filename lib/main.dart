@@ -8,9 +8,8 @@ import 'package:provider/provider.dart';
 import 'signup.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-    create: (context) => UserInfo(),
-    child: MyApp()));
+  runApp(
+      ChangeNotifierProvider(create: (context) => UserInfo(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -32,39 +31,31 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Carpool',
       theme: ThemeData(
-        
         fontFamily: 'OrstedSansOffice',
         checkboxTheme: CheckboxThemeData(
-          fillColor: MaterialStateProperty.resolveWith((states) => Colors.white),
-          checkColor: MaterialStateProperty.resolveWith((states) => Color(0xff644C76))
-        ),
+            fillColor:
+                MaterialStateProperty.resolveWith((states) => Colors.white),
+            checkColor: MaterialStateProperty.resolveWith(
+                (states) => Color(0xff644C76))),
         hintColor: Colors.white,
 
         inputDecorationTheme: InputDecorationTheme(
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)
-          ),
-          focusedErrorBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)
-          ),
-          disabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Color(0xff644C76))
-          ),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)
-          ),
-          errorBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.red)
-          ),
-          focusColor: Colors.white,
-          labelStyle: TextStyle(color: Colors.white),
-          hoverColor: Colors.white
-        ),
+            enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white)),
+            focusedErrorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white)),
+            disabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color(0xff644C76))),
+            border: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white)),
+            errorBorder:
+                UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+            focusColor: Colors.white,
+            labelStyle: TextStyle(color: Colors.white),
+            hoverColor: Colors.white),
         textTheme: TextTheme(
-          
           subtitle1: TextStyle(color: Colors.white),
           subtitle2: TextStyle(color: Colors.white),
           button: TextStyle(color: Colors.white),
@@ -76,20 +67,19 @@ class MyApp extends StatelessWidget {
           headline3: TextStyle(color: Colors.white),
           headline4: TextStyle(color: Colors.white),
           headline5: TextStyle(color: Colors.white),
-          
-          ),
-        outlinedButtonTheme: OutlinedButtonThemeData(style: ButtonStyle(
-          foregroundColor: MaterialStateProperty.resolveWith(getColor))),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+            style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.resolveWith(getColor))),
         brightness: Brightness.light,
         // primaryColor: Color(0xff4099DA),
         accentColor: Color(0xff644C76),
         scaffoldBackgroundColor: Color(0xff4099DA),
         appBarTheme: AppBarTheme(
-          centerTitle: true,
-          backgroundColor: Color(0xff4099DA),
-          foregroundColor: Colors.white
-          ),
-        
+            centerTitle: true,
+            backgroundColor: Color(0xff4099DA),
+            foregroundColor: Colors.white),
+
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -133,26 +123,31 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(),
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        centerTitle: true,
-        title: Text("Welcome"),
-      ),
-   
-      body: Center(child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          OutlinedButton(child: Text("Sign In"),onPressed: () {
-            Navigator.pushNamed(context, "/signin");
-          },),
-          OutlinedButton(child: Text("Sign Up"),onPressed: () {
-            Navigator.pushNamed(context, "/signup");
-          },),
-          
-        ],),)
-      
-    );
+        appBar: AppBar(
+          leading: Container(),
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          centerTitle: true,
+          title: Text("Welcome"),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              OutlinedButton(
+                child: Text("Sign In"),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/signin");
+                },
+              ),
+              OutlinedButton(
+                child: Text("Sign Up"),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/signup");
+                },
+              ),
+            ],
+          ),
+        ));
   }
 }
