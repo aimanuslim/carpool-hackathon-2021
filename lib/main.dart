@@ -3,6 +3,7 @@ import 'package:carpool/signin.dart';
 import 'package:carpool/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'common.dart';
 import 'google_maps.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Carpool',
       theme: ThemeData(
+        
         fontFamily: 'OrstedSansOffice',
         checkboxTheme: CheckboxThemeData(
           fillColor: MaterialStateProperty.resolveWith((states) => Colors.white),
@@ -40,7 +42,6 @@ class MyApp extends StatelessWidget {
         ),
         hintColor: Colors.white,
 
-        
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.white)
@@ -86,6 +87,7 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xff644C76),
         scaffoldBackgroundColor: Color(0xff4099DA),
         appBarTheme: AppBarTheme(
+          centerTitle: true,
           backgroundColor: Color(0xff4099DA),
           foregroundColor: Colors.white
           ),
@@ -110,11 +112,14 @@ class MyApp extends StatelessWidget {
         '/signin': (context) => SignInPage(),
         '/': (context) => LandingPage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/headingto': (context) => HeadingToPage(),
+        '/headingto': (context) => LocationsListPage(),
         '/enterdetails': (context) => EnterDetailsPage(),
         '/commutedetails': (context) => UserCommuteDetailsPage(),
         '/selecteddrivers': (context) => SelectedDriverPage(),
-        '/mainpage': (context) => MainPage()
+        '/confirmation': (context) => ConfirmationPage(),
+        '/notification': (context) => NotificationPage(),
+        '/messagelist': (context) => MessageListPage(),
+        '/mainpage': (context) => MainPage(),
       },
     );
   }
@@ -130,9 +135,10 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
+        leading: Container(),
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
+        centerTitle: true,
         title: Text("Welcome"),
       ),
    

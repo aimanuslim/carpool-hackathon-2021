@@ -3,6 +3,12 @@ import 'package:flutter/cupertino.dart';
 class UserInfo extends ChangeNotifier {
   bool _isDriver = false;
   bool _isPassenger = false;
+  
+
+  void clearAll() {
+    _isDriver = false;
+    _isPassenger = false;
+  }
 
   void setAsDriver() {
     _isDriver = true;

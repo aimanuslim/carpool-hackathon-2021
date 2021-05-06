@@ -202,7 +202,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
-        title: Text('Route to work'),
+        title: Text('Here is how to get to your [placeholder]'),
       ),
       body: GoogleMap(
         onMapCreated: _onMapCreated,

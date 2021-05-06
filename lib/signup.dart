@@ -46,6 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     UserInfo userInfoModel = Provider.of<UserInfo>(context, listen: false);
+    userInfoModel.clearAll();
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -139,12 +140,12 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
-class HeadingToPage extends StatefulWidget {
+class LocationsListPage extends StatefulWidget {
   @override
-  _HeadingToPageState createState() => _HeadingToPageState();
+  _LocationsListPageState createState() => _LocationsListPageState();
 }
 
-class _HeadingToPageState extends State<HeadingToPage> {
+class _LocationsListPageState extends State<LocationsListPage> {
   Map<String, List<String>> locationList = {
     "Malaysia": ["Kuala Lumpur"],
     "Great Britain": [
@@ -220,117 +221,22 @@ class _HeadingToPageState extends State<HeadingToPage> {
       ));
     });
 
-    listOfWidgets.add(Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: OutlinedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/enterdetails");
-                },
-                child: Text("Next")),
-          ),
-        )
-      ],
-    ));
 
     return Scaffold(
+      floatingActionButton: OutlinedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, "/enterdetails");
+          },
+          child: Text("Next")),
         appBar: AppBar(
-          title: userInfoModel.isDriver
-              ? Text("I will be driving to..")
-              : Text("I am heading to.."),
+          title: Text("Office location")
         ),
         body: Center(
-            child: ListView(
-                children: listOfWidgets)));
-  }
-}
-
-class EnterDetailsPage extends StatefulWidget {
-  @override
-  _EnterDetailsPageState createState() => _EnterDetailsPageState();
-}
-
-class _EnterDetailsPageState extends State<EnterDetailsPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Address Details"),
-      ),
-      body: DetailsForm(),
-    );
-  }
-}
-
-class DetailsForm extends StatefulWidget {
-  @override
-  DetailsFormState createState() {
-    return DetailsFormState();
-  }
-}
-
-// Define a corresponding State class.
-// This class holds data related to the form.
-class DetailsFormState extends State<DetailsForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a `GlobalKey<FormState>`,
-  // not a GlobalKey<MyCustomFormState>.
-  final _formKey = GlobalKey<FormState>();
-
-  @override
-  Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
-    return Form(
-      key: _formKey,
-      child: ListView(
-        children: <Widget>[
-          // Add TextFormFields and ElevatedButton here.
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TextFormField(
-              decoration: InputDecoration(labelText: "Address"),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TextFormField(
-              decoration: InputDecoration(labelText: "City"),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TextFormField(
-              decoration: InputDecoration(labelText: "Postcode"),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TextFormField(
-              decoration: InputDecoration(labelText: "No of Passengers"),
-              // TODO: form validation, number only.
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text("You will shortly receive a confirmation email"),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: OutlinedButton(onPressed: () {}, child: Text("Next")),
-              )
-            ],
-          )
-        ],
-      ),
-    );
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 80),
+              child: ListView(
+                
+                  children: listOfWidgets),
+            )));
   }
 }
